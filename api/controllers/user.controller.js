@@ -1,19 +1,10 @@
 import User from "../models/user.model.js";
-import bcryptjs from 'bcryptjs'
-export const test=(req,res)=>{
-    res.json({message:'api is working'});
+import bcrypt from 'bcryptjs'; // Correct import of bcryptjs
+
+export const test = (req, res) => {
+  res.json({ message: 'API is working' });
 };
-// export const registerStudent = async (req, res) => {
-//     try {
-//       const newUser = new User(req.body);
-//       await newUser.save();
-//       res.status(201).json({ message: "Student registered successfully!" });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ message: "Error registering student", error });
-//     }
-//   };
-// 
+
 export const registerStudent = async (req, res) => {
   try {
     console.log("Incoming request body:", req.body);
@@ -25,8 +16,8 @@ export const registerStudent = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt round of 10
+    // Hash the password with a salt round of 10
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new student record
     const newUser = new User({
@@ -47,6 +38,7 @@ export const registerStudent = async (req, res) => {
     res.status(500).json({ message: "Error registering student", error: error.message });
   }
 };
+
 
 export const Login = async (req, res) => {
   const { name, password } = req.body;
