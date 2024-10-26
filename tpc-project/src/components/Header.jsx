@@ -45,13 +45,35 @@
 
 // export default Header;
 import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux"; // Import useSelector from React Redux
+
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentUser, signInFailure } from '../redux/user/userSlice.js'; // Import hooks from Redux// Import useSelector from React Redux
 
 function Header() {
   // Access the current user from the Redux store
   const currentUser = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/user/signout', {
+        method: 'POST',
+        credentials: 'include', // Ensure cookies are included
+      });
 
+      if (res.ok) {
+        dispatch(setCurrentUser(null)); // Clear the Redux user state
+        navigate('/'); // Navigate to home page
+      } else {
+        const data = await res.json();
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error signing out:', error);
+      dispatch(signInFailure(error.message)); // Handle error state
+    }
+  };
   return (
     <header
       className="flex flex-col justify-end text-black"
@@ -93,9 +115,12 @@ function Header() {
                 </Link>
               </li>
               <li>
-                <Link to="/logout" className="text-white hover:underline">
-                  Log Out
-                </Link>
+              <button
+                onClick={handleSignOut}
+                className="text-white hover:underline"
+              >
+                Logout
+              </button>
               </li>
             </>
           ) : (

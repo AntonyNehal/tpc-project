@@ -103,3 +103,40 @@ export const username = async (req, res) =>{
     res.status(500).json({ message: 'Error fetching user data' });
   }
 };
+
+export const deleteUser=async(req,res,next)=> {
+  try {
+      const user = await User.findByIdAndDelete(req.params.userId);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found.' });
+      }
+      res.status(200).json({ message: 'User deleted successfully.' });
+  } catch (error) {
+      res.status(500).json({ message: 'Server error.', error: error.message });
+  }
+};
+
+// export const signout=(req,res,next)=>{
+//   try{
+//     res.clearCookie('access_token').status(200).json('User has been signed Out');
+//   }
+//   catch(error){
+//     next(error);
+//   }
+// }
+
+// Sign-out Controller Function
+export const signout = (req, res, next) => {
+  try {
+    res
+      .clearCookie('access_token', {
+        httpOnly: true,
+        sameSite: 'lax', // Prevent CSRF attacks
+        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      })
+      .status(200)
+      .json({ message: 'User has been signed out' });
+  } catch (error) {
+    next(error);
+  }
+};
