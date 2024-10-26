@@ -5,28 +5,54 @@ import { setCurrentUser } from '../redux/user/userSlice';
 const Profile = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser); // Access current user from Redux store
+  const fetchUserData = async () => {
+    if (!currentUser || !currentUser._id) {
+      console.error('User ID not available');
+      return;
+    }
+
+    try {
+      // Send the user ID with the request as a query parameter or in the body
+      const response = await fetch(`http://localhost:3000/api/user/users/${currentUser._id}`, {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('User Data:', data);
+    } catch (error) {
+      console.error('Failed to fetch user data:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [currentUser]);
 
   // Fetch user data from backend
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/user/me', {
-          method: 'GET',
-          credentials: 'include',
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          dispatch(setCurrentUser(userData)); // Set current user in Redux store
-        } else {
-          console.error('Failed to fetch user data.');
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:3000/api/user/me', {
+  //         method: 'GET',
+  //         credentials: 'include',
+  //       });
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         dispatch(setCurrentUser(userData)); // Set current user in Redux store
+  //       } else {
+  //         console.error('Failed to fetch user data.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, [dispatch]);
+  //   fetchUserData();
+  // }, [dispatch]);
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     const date = new Date(dateString);

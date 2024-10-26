@@ -84,7 +84,6 @@ const Register = () => {
       }
     );
   };
-  
   const registerStudent = async (data) => {
     try {
       const response = await fetch("http://localhost:3000/api/user/students", {
@@ -97,7 +96,8 @@ const Register = () => {
   
       const result = await response.json();
       if (response.ok) {
-        dispatch(signInSuccess(result));
+        // Dispatch userId and other user data to Redux
+        dispatch(signInSuccess({ ...result.user, userId: result.user._id })); // Make sure to include userId
         alert("Registration successful!");
         navigate("/dashboard");
       } else {
@@ -110,7 +110,6 @@ const Register = () => {
       dispatch(signInFailure(error.message));
     }
   };
-  
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-full w-full h-full flex flex-col justify-center">

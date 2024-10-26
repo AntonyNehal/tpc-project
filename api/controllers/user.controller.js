@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import bcrypt from 'bcryptjs'; // Correct import of bcryptjs
+import bcrypt from 'bcryptjs'; 
 
 export const test = (req, res) => {
   res.json({ message: 'API is working' });
@@ -56,7 +56,7 @@ export const Login = async (req, res) => {
     }
 
     // Compare password
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    const validPassword = bcrypt.compareSync(password, validUser.password);
     if (!validPassword) {
       return res.status(400).json({ message: 'Invalid name or password' });
     }
@@ -70,27 +70,73 @@ export const Login = async (req, res) => {
   }
 };
 
-// Route to get the current user
-export const username = async (req, res) =>{
+export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.userId); // Ensure req.userId is correctly populated
+    const userId = req.params.id; // Get the user ID from the request parameters
+    const user = await User.findById(userId); // Find user by ID
+
     if (user) {
       res.json({
         name: user.name,
         image: user.image,
-        branch: user.branch,
-        semester: user.semester,
-        phone: user.phone,
-        email: user.email,
-        address: user.address,
-        gender: user.gender,
-        dob: user.dob,
-        nationality: user.nationality,
-        skills: user.skills, // Assuming skills is an array in your user model
       });
     } else {
       res.status(404).json({ message: 'User not found' });
     }
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ message: 'Error fetching user data' });
+  }
+};
+
+// Route to get the current user
+// export const username = async (req, res) =>{
+//   try {
+//     const user = await User.findById(req.userId); // Ensure req.userId is correctly populated
+//     if (user) {
+//       res.json({
+//         name: user.name,
+//         image: user.image,
+//         branch: user.branch,
+//         semester: user.semester,
+//         phone: user.phone,
+//         email: user.email,
+//         address: user.address,
+//         gender: user.gender,
+//         dob: user.dob,
+//         nationality: user.nationality,
+//         skills: user.skills, // Assuming skills is an array in your user model
+//       });
+//     } else {
+//       res.status(404).json({ message: 'User not found' });
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching user data' });
+//   }
+// };
+// user.controller.js
+export const userdetails = async (req, res) => {
+  try {
+    const { id } = req.params; // Get userId from request params
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      name: user.name,
+      image: user.image,
+      branch: user.branch,
+      semester: user.semester,
+      phone: user.phone,
+      email: user.email,
+      address: user.address,
+      gender: user.gender,
+      dob: user.dob,
+      nationality: user.nationality,
+      skills: user.skills,
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching user data' });
   }

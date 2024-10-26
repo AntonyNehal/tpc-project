@@ -50,7 +50,7 @@ const userSlice = createSlice({
       state.error = null;
     },
     signInSuccess: (state, action) => {
-      state.currentUser = action.payload;
+      state.currentUser = action.payload; // Ensure this contains { id, name, image }
       state.loading = false;
       state.error = null;
     },
