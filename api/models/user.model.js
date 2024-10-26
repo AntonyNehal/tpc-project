@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  password:{
+    type:String,
+    required:true,
+  },
   dob: {
     type: Date,
     required: true,
@@ -55,6 +59,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  image: {
+    type: String,
+},
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
