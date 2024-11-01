@@ -67,3 +67,6 @@ const userSlice = createSlice({
 // Export the actions and the reducer
 export const { signInFailure, signInStart, signInSuccess, setCurrentUser } = userSlice.actions;
 export default userSlice.reducer;
+// userSlice.js
+// 
+// src/redux/user/userSlice.js

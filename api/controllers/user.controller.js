@@ -44,7 +44,7 @@ export const Login = async (req, res) => {
   const { name, password } = req.body;
 
   // Check if both fields are provided
-  if (!name || !password || name === '' || password === '') {
+  if (!name || !password || name.trim() === '' || password.trim() === '') {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -61,9 +61,9 @@ export const Login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid name or password' });
     }
 
-    // Send response without password
-    const { password: pass, ...rest } = validUser._doc;
-    res.status(200).json({ ...rest }); // Send user data back
+    // Send response without password, but include user ID
+    const { password: pass, ...rest } = validUser._doc; // Exclude password
+    res.status(200).json({ _id: validUser._id, ...rest }); // Send user ID and other data
   } catch (err) {
     console.error('Login error:', err); // Log error details for debugging
     res.status(500).json({ message: 'Internal Server Error' });
@@ -177,4 +177,144 @@ export const signout = (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+
+// export const uploadDocuments = async (req, res) => {
+//   try {
+//     const { id } = req.params; // User ID
+//     const { urls } = req.body; // Array of document URLs from the frontend
+
+//     const user = await User.findByIdAndUpdate(
+//       id,
+//       { $push: { documents: { $each: urls } } }, // Add URLs to the documents array
+//       { new: true }
+//     );
+
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     res.json({ message: 'Documents uploaded successfully', documents: user.documents });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error uploading documents' });
+//   }
+// };
+
+// export const getUserDetails = async (req, res) =>{
+//   try {
+//     const user = await User.findById(req.params.id);
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+//     res.json(user);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching user', error });
+//   }
+// };
+
+// Update user by ID
+// Update user by ID
+// export const updateDetails = async (req, res) => {
+//   try {
+//     const updatedUser = await User.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true } // Optional: Adds validation on update
+//     );
+    
+//     if (!updatedUser) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     res.json(updatedUser);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error updating user', error });
+//   }
+// };
+// Update user by email
+// export const updateDetails = async (req, res) => {
+//   try {
+//     const { id } = req.params; // Get ID from params
+//     console.log("Updating user with ID:", id);
+//     console.log("Request body:", req.body);
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       id, // Find user by ID
+//       req.body,
+//       { new: true, runValidators: true } // Optional: Adds validation on update
+//     );
+
+//     if (!updatedUser) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     res.json(updatedUser);
+//   } catch (error) {
+//     console.error("Error updating user:", error); // Log the error
+//     res.status(500).json({ message: 'Error updating user', error });
+//   }
+// };
+
+
+// export const getUserDetails = async (req, res) => {
+//   try {
+//     const { userId } = req.query; // Assuming userId is passed as a query parameter
+//     if (!userId) return res.status(400).json({ message: 'User ID is required' });
+    
+//     const user = await User.findById(userId).select('-password'); // Exclude password
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+    
+//     res.json(user);
+//   } catch (err) {
+//     console.error('Error fetching user data:', err);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+
+// export const updateDetails = async (req, res) => {
+//   try {
+//     const { userId } = req.body; // Assuming userId is sent in the request body
+//     const updateFields = req.body;
+//     if (!userId) return res.status(400).json({ message: 'User ID is required' });
+    
+//     const user = await User.findByIdAndUpdate(userId, updateFields, { new: true });
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+    
+//     res.json(user);
+//   } catch (err) {
+//     console.error('Error updating user data:', err);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+
+
+
+// UPDATE user by ID
+export const updateDetails = async (req, res) =>  {
+  try {
+    const user = await User.findOne({ name: req.params.name });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const edit = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const updatedUser = await User.findOneAndUpdate({ name }, req.body, { new: true, runValidators: true });
+
+    if (!updatedUser) {
+        return res.status(404).send({ message: 'User not found' });
+    }
+
+    res.status(200).send(updatedUser);
+} catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).send({ message: 'Server error' });
+}
 };

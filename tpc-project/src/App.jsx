@@ -11,6 +11,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Edit from './pages/Edit';
+import CuisineDetail from './pages/Cuines';
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/editprofile" element={<Edit/>}/>
+        <Route path="/cui" element={<CuisineDetail/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

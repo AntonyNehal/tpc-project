@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["female", "male", "other"],
+    enum: ['Male', 'Female', 'Other'],
     required: true,
   },
   differentlyAbled: {
@@ -62,6 +62,10 @@ const userSchema = new mongoose.Schema({
   image: {
     type: String,
 },
+skills: { type: [String], default: [] }, // Array for skills
+documents: { type: [String], default: [] }, // Array for documents URLs
+resume: { type: String }, // URL for the uploaded resume
+isAdmin: { type: Boolean, default: false },
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
