@@ -1,49 +1,4 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
 
-// function Header() {
-//   return (
-//     <header
-//       className="text-white p-4"
-//       style={{
-//         backgroundImage: 'url("../public/collegeimage.jpg")',
-//         backgroundSize: "cover",      // Ensures the image covers the entire area
-//         backgroundPosition: "center", // Centers the image
-//         backgroundRepeat: "no-repeat" // Prevents repeating the image
-//       }}
-//     >
-//       <nav className="flex items-center justify-between bg-indigo-700 bg-opacity-75 p-4">
-//         <div className="text-3xl font-bold">
-//           <Link to="/">CEC</Link>
-//         </div>
-//         <ul className="flex space-x-6">
-//           <li>
-//             <Link to="/about" className="hover:underline">
-//               About
-//             </Link>
-//           </li>
-//           <li>
-//             <Link to="/contact" className="hover:underline">
-//               Contact
-//             </Link>
-//           </li>
-//           <li>
-//             <Link to="/calendar" className="hover:underline">
-//               TPC Calendar
-//             </Link>
-//           </li>
-//           <li>
-//             <Link to="/login" className="hover:underline">
-//               Log In
-//             </Link>
-//           </li>
-//         </ul>
-//       </nav>
-//     </header>
-//   );
-// }
-
-// export default Header;
 import React from "react";
 
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -64,7 +19,7 @@ function Header() {
 
       if (res.ok) {
         dispatch(setCurrentUser(null)); // Clear the Redux user state
-        navigate('/'); // Navigate to home page
+        navigate('/login'); // Navigate to home page
       } else {
         const data = await res.json();
         console.error(data.message);
@@ -109,11 +64,13 @@ function Header() {
           {/* Conditional rendering based on user login status */}
           {currentUser ? (
             <>
-              <li>
-                <Link to="/dashboard" className="text-white hover:underline">
-                  Dashboard
-                </Link>
-              </li>
+              {currentUser && !currentUser.isAdmin && (
+    <li>
+      <Link to="/dashboard" className="text-white hover:underline">
+        Dashboard
+      </Link>
+    </li>
+)}
               <li>
               <button
                 onClick={handleSignOut}

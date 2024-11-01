@@ -33,15 +33,21 @@ const Login = () => {
         alert(data.message); // Show error message from the server
       } else {
 
-        // dispatch(signInSuccess(data)); 
-        dispatch(signInSuccess({ 
-          _id: data._id, // Ensure this field is returned from your API
-          name: data.name,
-          image: data.image,
-          // Add other fields you need
-        }));// Dispatch signInSuccess with user data
-        alert('Student Login Successful'); // Show success message
-        navigate('/dashboard'); // Navigate to the dashboard
+        dispatch(signInSuccess(data));
+        // dispatch(signInSuccess({ 
+        //   _id: data._id, 
+        //   name: data.name,
+        //   image: data.image,
+
+        // }));
+         // Show success message
+        if (data.isAdmin) {
+          alert('Admin Login Successful');
+          navigate('/home'); // Admin panel
+        } else {
+          alert('Student Login Successful');
+          navigate('/dashboard'); // Regular user dashboard
+        } // Navigate to the dashboard
       }
     } catch (err) {
       dispatch(signInFailure('Something went wrong, please try again.')); // Dispatch failure on catch
@@ -60,7 +66,7 @@ const Login = () => {
       <div className="text-center bg-gradient-to-r from-teal-400 to-blue-400 p-10 rounded-lg shadow-lg w-full max-w-lg">
         <h1 className="text-white text-3xl mb-6">Training and Placement Cell</h1>
         <form className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg" onSubmit={handleLogin}>
-          <h2 className="text-xl font-semibold mb-4">Student Login</h2>
+          <h2 className="text-xl font-semibold mb-4">Login</h2>
           <input
             type="text"
             placeholder="Name" // Placeholder updated to 'Name'
@@ -86,11 +92,7 @@ const Login = () => {
               Register Here
             </a>
           </p>
-          <p>
-            <a href="adminlogin.html" className="text-blue-500 hover:underline">
-              Login as Admin
-            </a>
-          </p>
+     
         </form>
       </div>
     </div>
