@@ -43,7 +43,7 @@ const Login = () => {
          // Show success message
         if (data.isAdmin) {
           alert('Admin Login Successful');
-          navigate('/home'); // Admin panel
+          navigate('/admin'); // Admin panel
         } else {
           alert('Student Login Successful');
           navigate('/dashboard'); // Regular user dashboard

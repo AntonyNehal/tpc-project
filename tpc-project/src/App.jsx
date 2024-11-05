@@ -13,6 +13,8 @@ import Edit from './pages/Edit';
 import CuisineDetail from './pages/Cuines';
 import Header from './components/Header';
 import Home from './pages/Home';
+import TrainingAndPlacementCell from './pages/TrainingAndPlacementCell';
+import Adminp from './pages/Adminp';
 
 
 export default function App() {
@@ -22,7 +24,8 @@ export default function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<TrainingAndPlacementCell />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calendar" element={<Calendar />} />
@@ -32,7 +35,7 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<Edit />} />
-        <Route path="/cui" element={<CuisineDetail />} />
+        <Route path="/admin" element={<Adminp />} />
       </Routes>
       <Footer />
     </BrowserRouter>
