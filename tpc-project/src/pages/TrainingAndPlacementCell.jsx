@@ -90,22 +90,21 @@ const TrainingAndPlacementCell = () => {
 
                 <section id="placements">
                     <h3 className="text-2xl font-bold">Past Placement Graph</h3>
-                    <canvas id="placementGraph" width="400" height="200"></canvas>
+                    <canvas id="placementGraph" width="400" height="100"></canvas>
                 </section>
 
                 <section id="recruiters" style={sectionStyle}>
-                    <div className="row">
-                        <h3 className="text-2xl font-bold">Our Recruiters</h3>
-                        <div className="flex flex-wrap justify-center mt-4">
-                            {recruiters.map((recruiter, index) => (
-                                <div key={index} className="m-2">
-                                    <img src={recruiter.logo} alt={recruiter.name} style={{ width: '100px', height: 'auto' }} />
-                                    <p className="text-center mt-2">{recruiter.name}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+                <div className="row">
+                <h3 className="text-2xl font-bold">Our Recruiters</h3>
+        <div className="flex flex-wrap justify-center mt-4">
+
+        <div className="flex justify-center mt-8">
+          <img src="../logoA.png.jpeg" alt="Additional Recruiter" style={{ width: '900px', height: 'auto' }} />
+         </div>
+        </div>
+     </div>
+        </section>
+
 
                 <section id="calendar" style={sectionStyle}>
                     <div className="row">

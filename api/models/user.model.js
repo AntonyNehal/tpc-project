@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
   },
   nationality: {
     type: String,
-    required: true,
   },
   gender: {
     type: String,
@@ -26,11 +25,9 @@ const userSchema = new mongoose.Schema({
   differentlyAbled: {
     type: String,
     enum: ["yes", "no"],
-    required: true,
   },
   areaOfInterest: {
     type: String,
-    required: true,
   },
   phone: {
     type: String,
@@ -51,6 +48,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   branch: {
+    type: String,
+    required: true,
+  },
+  cgpa: {
     type: String,
     required: true,
   },

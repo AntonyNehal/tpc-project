@@ -15,6 +15,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import TrainingAndPlacementCell from './pages/TrainingAndPlacementCell';
 import Adminp from './pages/Adminp';
+import FilterUsers from './pages/FilterUsers';
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<Edit />} />
         <Route path="/admin" element={<Adminp />} />
+        <Route path="/filter" element={<FilterUsers />} />
       </Routes>
       <Footer />
     </BrowserRouter>

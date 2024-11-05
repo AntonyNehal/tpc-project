@@ -89,32 +89,6 @@ export const getUser = async (req, res) => {
   }
 };
 
-// Route to get the current user
-// export const username = async (req, res) =>{
-//   try {
-//     const user = await User.findById(req.userId); // Ensure req.userId is correctly populated
-//     if (user) {
-//       res.json({
-//         name: user.name,
-//         image: user.image,
-//         branch: user.branch,
-//         semester: user.semester,
-//         phone: user.phone,
-//         email: user.email,
-//         address: user.address,
-//         gender: user.gender,
-//         dob: user.dob,
-//         nationality: user.nationality,
-//         skills: user.skills, // Assuming skills is an array in your user model
-//       });
-//     } else {
-//       res.status(404).json({ message: 'User not found' });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching user data' });
-//   }
-// };
-// user.controller.js
 export const userdetails = async (req, res) => {
   try {
     const { id } = req.params; // Get userId from request params
@@ -154,16 +128,6 @@ export const deleteUser=async(req,res,next)=> {
   }
 };
 
-// export const signout=(req,res,next)=>{
-//   try{
-//     res.clearCookie('access_token').status(200).json('User has been signed Out');
-//   }
-//   catch(error){
-//     next(error);
-//   }
-// }
-
-// Sign-out Controller Function
 export const signout = (req, res, next) => {
   try {
     res
@@ -180,117 +144,6 @@ export const signout = (req, res, next) => {
 };
 
 
-// export const uploadDocuments = async (req, res) => {
-//   try {
-//     const { id } = req.params; // User ID
-//     const { urls } = req.body; // Array of document URLs from the frontend
-
-//     const user = await User.findByIdAndUpdate(
-//       id,
-//       { $push: { documents: { $each: urls } } }, // Add URLs to the documents array
-//       { new: true }
-//     );
-
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     res.json({ message: 'Documents uploaded successfully', documents: user.documents });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error uploading documents' });
-//   }
-// };
-
-// export const getUserDetails = async (req, res) =>{
-//   try {
-//     const user = await User.findById(req.params.id);
-//     if (!user) return res.status(404).json({ message: 'User not found' });
-//     res.json(user);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching user', error });
-//   }
-// };
-
-// Update user by ID
-// Update user by ID
-// export const updateDetails = async (req, res) => {
-//   try {
-//     const updatedUser = await User.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true, runValidators: true } // Optional: Adds validation on update
-//     );
-    
-//     if (!updatedUser) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     res.json(updatedUser);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error updating user', error });
-//   }
-// };
-// Update user by email
-// export const updateDetails = async (req, res) => {
-//   try {
-//     const { id } = req.params; // Get ID from params
-//     console.log("Updating user with ID:", id);
-//     console.log("Request body:", req.body);
-
-//     const updatedUser = await User.findByIdAndUpdate(
-//       id, // Find user by ID
-//       req.body,
-//       { new: true, runValidators: true } // Optional: Adds validation on update
-//     );
-
-//     if (!updatedUser) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-
-//     res.json(updatedUser);
-//   } catch (error) {
-//     console.error("Error updating user:", error); // Log the error
-//     res.status(500).json({ message: 'Error updating user', error });
-//   }
-// };
-
-
-// export const getUserDetails = async (req, res) => {
-//   try {
-//     const { userId } = req.query; // Assuming userId is passed as a query parameter
-//     if (!userId) return res.status(400).json({ message: 'User ID is required' });
-    
-//     const user = await User.findById(userId).select('-password'); // Exclude password
-//     if (!user) return res.status(404).json({ message: 'User not found' });
-    
-//     res.json(user);
-//   } catch (err) {
-//     console.error('Error fetching user data:', err);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// };
-
-
-// export const updateDetails = async (req, res) => {
-//   try {
-//     const { userId } = req.body; // Assuming userId is sent in the request body
-//     const updateFields = req.body;
-//     if (!userId) return res.status(400).json({ message: 'User ID is required' });
-    
-//     const user = await User.findByIdAndUpdate(userId, updateFields, { new: true });
-//     if (!user) return res.status(404).json({ message: 'User not found' });
-    
-//     res.json(user);
-//   } catch (err) {
-//     console.error('Error updating user data:', err);
-//     res.status(500).json({ message: 'Internal Server Error' });
-//   }
-// };
-
-
-
-
-// UPDATE user by ID
 export const updateDetails = async (req, res) =>  {
   try {
     const user = await User.findOne({ name: req.params.name });
@@ -340,5 +193,89 @@ export const deleteusers = async (req, res) => {
     res.json({ message: 'User deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Failed to delete user', error });
+  }
+};
+
+export const updateuser = async (req, res) =>{
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true });
+    if (updatedUser) {
+      res.status(200).json(updatedUser);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Error updating user' });
+  }
+};
+
+
+export const createuser = async (req, res) =>{
+  const {
+    name,
+    password,
+    dob,
+    nationality,
+    gender,
+    differentlyAbled,
+    areaOfInterest,
+    phone,
+    email,
+    year,
+    semester,
+    branch,
+    cgpa,
+    registerNumber,
+  } = req.body;
+
+  try {
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      password: hashedPassword,
+      dob,
+      nationality,
+      gender,
+      differentlyAbled,
+      areaOfInterest,
+      phone,
+      email,
+      year,
+      semester,
+      branch,
+      cgpa,
+      registerNumber,
+    });
+
+    await newUser.save();
+    res.status(201).json({ message: 'User created successfully!', user: newUser });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ message: 'Error creating user', error: error.message });
+  }
+};
+
+
+export const filter = async (req, res) =>{
+  try {
+    const { name, semester, cgpa } = req.query;
+
+    // Build dynamic filter object based on query params
+    const filter = {};
+    if (name) filter.name = new RegExp(name, 'i'); // Case-insensitive search
+    if (semester) filter.semester = Number(semester);
+    if (cgpa) filter.cgpa = cgpa;
+
+    const users = await User.find(filter);
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Failed to fetch users' });
   }
 };

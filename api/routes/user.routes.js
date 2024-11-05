@@ -1,5 +1,5 @@
 import express from 'express';
-import { allUsers, deleteusers, edit, getUser, Login, registerStudent, signout, test, userdetails } from '../controllers/user.controller.js';
+import { allUsers, createuser, deleteusers, edit, filter, getUser, Login, registerStudent, signout, test, updateuser, userdetails } from '../controllers/user.controller.js';
 const router=express.Router();
 router.get('/test',test);
 router.post('/students', registerStudent);
@@ -13,4 +13,9 @@ router.put('/users/:name', edit);
 
 router.post('/all', allUsers);
 router.delete('/delete/:id', deleteusers);
+
+router.put('/update/:id',updateuser);
+router.post('/create',createuser);
+
+router.get('/',filter);
 export default router;

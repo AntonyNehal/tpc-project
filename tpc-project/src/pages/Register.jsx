@@ -118,6 +118,7 @@ const Register = () => {
           <InputField id="name" label="Name:" value={formData.name} onChange={handleInputChange} />
           <InputField id="dob" type="date" label="Date of Birth:" value={formData.dob} onChange={handleInputChange} />
           <InputField id="nationality" label="Nationality:" value={formData.nationality} onChange={handleInputChange} />
+          <InputField id="cgpa" label="Cgpa:" value={formData.cgpa} onChange={handleInputChange} />
           <SelectField
             id="gender"
             label="Gender:"

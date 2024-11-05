@@ -47,23 +47,23 @@ function Header() {
         </div>
         <ul className="flex space-x-6">
           <li>
-            <Link to="/about" className="text-white hover:underline">
-              About
+            <Link to="/" className="text-white hover:underline">
+              Home
             </Link>
           </li>
-          <li>
-            <Link to="/contact" className="text-white hover:underline">
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link to="/calendar" className="text-white hover:underline">
-              TPC Calendar
-            </Link>
-          </li>
-          {/* Conditional rendering based on user login status */}
+
           {currentUser ? (
             <>
+             {currentUser.isAdmin && (
+              <>
+                <li>
+                  <Link to="/admin" className="text-white hover:underline">Admin</Link>
+                </li>
+                <li>
+                <Link to="/filter" className="text-white hover:underline">Filter</Link>
+              </li>
+              </>
+              )}
               {currentUser && !currentUser.isAdmin && (
     <li>
       <Link to="/dashboard" className="text-white hover:underline">
