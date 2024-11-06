@@ -1,13 +1,14 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./user/userSlice";
 import userEditSlice from "./user/userEditSlice";
+
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // Importing storage correctly
 
 // Combine reducers (in case you add more in the future)
 const rootReducer = combineReducers({
   user: userReducer,
-  userEdit: userEditSlice, // Use the correct userReducer here
+  userEdit: userEditSlice,// Use the correct userReducer here
 });
 
 // Persistence configuration

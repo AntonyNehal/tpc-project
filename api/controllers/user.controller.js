@@ -279,3 +279,22 @@ export const filter = async (req, res) =>{
     res.status(500).json({ message: 'Failed to fetch users' });
   }
 };
+
+
+// user.controller.js
+export const sendmessage = async (req, res) => {
+  const { senderId, recipientId, content } = req.body;
+
+  if (!senderId || !recipientId || !content) {
+    return res.status(400).json({ error: 'All fields are required.' });
+  }
+
+  try {
+    const newMessage = new Message({ sender: senderId, recipient: recipientId, content });
+    await newMessage.save();
+    res.status(201).json({ success: true, message: 'Message sent successfully', data: newMessage });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

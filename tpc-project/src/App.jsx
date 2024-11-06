@@ -5,17 +5,16 @@ import Register from './pages/Register';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import Calendar from './components/Calender';
-import About from './components/About';
 import Contact from './components/Contact';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Edit from './pages/Edit';
-import CuisineDetail from './pages/Cuines';
 import Header from './components/Header';
 import Home from './pages/Home';
 import TrainingAndPlacementCell from './pages/TrainingAndPlacementCell';
 import Adminp from './pages/Adminp';
 import FilterUsers from './pages/FilterUsers';
+import About from './components/About';
 
 
 export default function App() {
@@ -29,7 +28,7 @@ export default function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/calender" element={<Calendar />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -37,6 +36,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<Edit />} />
         <Route path="/admin" element={<Adminp />} />
+        <Route path="/about" element={<About />} />
         <Route path="/filter" element={<FilterUsers />} />
       </Routes>
       <Footer />

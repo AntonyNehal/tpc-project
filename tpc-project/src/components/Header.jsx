@@ -51,7 +51,22 @@ function Header() {
               Home
             </Link>
           </li>
-
+        
+          <li>
+            <Link to="/about" className="text-white hover:underline">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" className="text-white hover:underline">
+              Contacts
+            </Link>
+          </li>
+          <li>
+            <Link to="/calender" className="text-white hover:underline">
+              Graph
+            </Link>
+          </li>
           {currentUser ? (
             <>
              {currentUser.isAdmin && (

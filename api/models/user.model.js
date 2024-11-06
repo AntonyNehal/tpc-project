@@ -1,6 +1,12 @@
 // models/user.model.js
 import mongoose from "mongoose";
 
+const messageSchema = new mongoose.Schema({
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  content: { type: String, required: true, maxlength: 500 }, // Added maxlength validation
+  date: { type: Date, default: Date.now },
+});
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -67,6 +73,7 @@ skills: { type: [String], default: [] }, // Array for skills
 documents: { type: [String], default: [] }, // Array for documents URLs
 resume: { type: String }, // URL for the uploaded resume
 isAdmin: { type: Boolean, default: false },
+messages: [messageSchema],
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
